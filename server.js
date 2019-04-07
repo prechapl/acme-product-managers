@@ -11,7 +11,7 @@ app.get('/app.js', (req, res, next) =>
 app.get('/', (req, res, next) =>
   res.sendFile(path.join(__dirname, 'index.html')));
 
-app.get('/api/users', (req, res, next) => {
+app.get('/api/managers', (req, res, next) => {
   User.findAll().then(users => res.send(users));
 });
 

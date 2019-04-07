@@ -6,21 +6,24 @@ import Managers from './Managers';
 import Products from './Products';
 import Home from './Home';
 import Nav from './Nav';
-import { fetchProductsThunk } from './store';
+import { fetchProductsThunk, fetchManagersThunk } from './store';
 
 class App extends Component {
   componentDidMount() {
-    // console.log('AppDidMount');
     this.props
       .fetchProductsThunk()
       .then(result =>
         console.log('componentDidMount in App: products ', result.products))
       .catch(error => console.log(error));
+
+    this.props
+      .fetchManagersThunk()
+      .then(result =>
+        console.log('componentDidMount in App: managers ', result.managers))
+      .catch(error => console.log(error));
   }
 
   render() {
-    // const products = this.props.fetchProductsThunk();
-    // console.log('App render: products', products);
     return (
       <Fragment>
         <HashRouter>
@@ -36,7 +39,8 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProductsThunk: () => dispatch(fetchProductsThunk())
+    fetchProductsThunk: () => dispatch(fetchProductsThunk()),
+    fetchManagersThunk: () => dispatch(fetchManagersThunk())
   };
 };
 
