@@ -1,51 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 // import axios from 'axios';
-import { HashRouter as Router, Route } from 'react-router-dom';
-import { Provider, connect } from 'react-redux';
+import { HashRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Managers from './Managers';
 import Products from './Products';
 import Home from './Home';
 import Nav from './Nav';
-import store, { fetchProducts } from './store';
+import { fetchProductsThunk } from './store';
 
 class App extends Component {
   componentDidMount() {
-    console.log('AppDidMount');
-    this.props.fetchProducts().catch(error => console.log(error));
+    // console.log('AppDidMount');
+    this.props
+      .fetchProductsThunk()
+      .then(result =>
+        console.log('componentDidMount in App: products ', result.products))
+      .catch(error => console.log(error));
   }
 
   render() {
-    // const products = this.props.fetchProducts();
-    // console.log('app render products', products);
+    // const products = this.props.fetchProductsThunk();
+    // console.log('App render: products', products);
     return (
-      <Provider store={store}>
-        <Router>
+      <Fragment>
+        <HashRouter>
           <Route render={({ location }) => <Nav location={location} />} />
-          <Route
-            path="/products"
-            render={() => <Products products={products} />}
-          />
-          <Route path="/managers" component={Managers} />
-          <Route path="/" component={Home} />
-        </Router>
-      </Provider>
+          <Route path="/api/products" component={Products} />
+          <Route path="/api/managers" component={Managers} />
+          <Route path="/api/home" component={Home} />
+        </HashRouter>
+      </Fragment>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: () => dispatch(fetchProducts())
+    fetchProductsThunk: () => dispatch(fetchProductsThunk())
   };
 };
 
-const mapStateToProps = state => {
-  console.log('state in mapStateToProps ', state);
-  return {
-    products: state
-  };
-};
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(App);

@@ -2,32 +2,32 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
+const initialState = {
+  products: [],
+  managers: []
+};
 //action type
 const GET_PRODUCTS = 'GET_PRODUCTS';
 
-// const initialState = {
-//   products: []
-// };
-
 //action creator
-const setProducts = data => {
+const getProducts = products => {
   return {
     type: GET_PRODUCTS,
-    data
+    products
   };
 };
 
 //thunk
-const fetchProducts = () => {
+export const fetchProductsThunk = () => {
   return dispatch => {
     return axios
-      .get('/products')
+      .get('/api/products')
       .then(response => response.data)
-      .then(products => dispatch(setProducts(products)));
+      .then(products => dispatch(getProducts(products)));
   };
 };
 
-const reducer = (state = [], action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return { ...state, products: action.products };
@@ -38,14 +38,5 @@ const reducer = (state = [], action) => {
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
-// store.subscribe(() => {
-//   store.getState();
-// });
-
-//subscribe, unsubscribe, dispatch, or getState
-// store.dispatch({
-//   type: ''
-// });
-
 export default store;
-export { setProducts, fetchProducts };
+// export { fetchProducts };

@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { fetchProducts } from './store';
+import { connect } from 'react-redux';
 
 class Products extends Component {
-  componentDidMount() {
-    fetchProducts().catch(error => console.log(error));
-  }
-
   render() {
-    // const products = this.props.products;
-    // console.log('products in Products render', products);
+    console.log('in Products render', this.props.products);
+    const products = this.props.products;
     return (
       <div>
         <ul>
           {products.map(product => {
-            return <li key={product.id}>{product.name}</li>;
+            return (
+              <li key={product.id}>
+                {product.name}
+                <div>managerId: {product.managerId}</div>
+              </li>
+            );
           })}
         </ul>
       </div>
@@ -21,4 +22,11 @@ class Products extends Component {
   }
 }
 
-export default Products;
+const mapStateToProps = state => {
+  console.log('state in mapStateToProps ', state);
+  return {
+    products: state.products
+  };
+};
+
+export default connect(mapStateToProps)(Products);
