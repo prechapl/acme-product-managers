@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Nav = ({ location }) => {
-  console.log('location ', location);
+  // console.log('location ', location);
   const pathname = location.pathname;
   const links = ['/api/home', '/api/products', '/api/managers'];
 

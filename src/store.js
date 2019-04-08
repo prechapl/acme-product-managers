@@ -6,6 +6,7 @@ const initialState = {
   products: [],
   managers: []
 };
+
 //action types
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const GET_MANAGERS = 'GET_MANAGERS';
@@ -25,7 +26,7 @@ const getManagers = managers => {
   };
 };
 
-//thunk
+//thunks
 export const fetchProductsThunk = () => {
   return dispatch => {
     return axios
@@ -43,6 +44,7 @@ export const fetchManagersThunk = () => {
   };
 };
 
+//reducer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
@@ -54,6 +56,7 @@ const reducer = (state = initialState, action) => {
   }
 };
 
+//create store
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;

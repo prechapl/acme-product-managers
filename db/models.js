@@ -26,7 +26,7 @@ const syncAndSeed = () => {
         User.create({ name: 'Larry' }),
         User.create({ name: 'Curly' }),
         Product.create({ name: 'Foo', managerId: 3 }),
-        Product.create({ name: 'Bar', managerId: 2 }),
+        Product.create({ name: 'Bar' }),
         Product.create({ name: 'Baz' })
       ]));
 };

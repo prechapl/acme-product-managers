@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-// import axios from 'axios';
 import { HashRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Managers from './Managers';
@@ -10,17 +9,8 @@ import { fetchProductsThunk, fetchManagersThunk } from './store';
 
 class App extends Component {
   componentDidMount() {
-    this.props
-      .fetchProductsThunk()
-      .then(result =>
-        console.log('componentDidMount in App: products ', result.products))
-      .catch(error => console.log(error));
-
-    this.props
-      .fetchManagersThunk()
-      .then(result =>
-        console.log('componentDidMount in App: managers ', result.managers))
-      .catch(error => console.log(error));
+    this.props.fetchProductsThunk().catch(error => console.log(error));
+    this.props.fetchManagersThunk().catch(error => console.log(error));
   }
 
   render() {

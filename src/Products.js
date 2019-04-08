@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class Products extends Component {
   render() {
-    console.log('in Products render', this.props.products);
+    // console.log('in Products render', this.props.products);
     const products = this.props.products;
     return (
       <div>
@@ -23,7 +23,6 @@ class Products extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state in mapStateToProps ', state);
   return {
     products: state.products
   };

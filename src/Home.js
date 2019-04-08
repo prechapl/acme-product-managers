@@ -1,13 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Home extends Component {
-  constructor() {
-    super();
-    this.state = null;
-  }
   render() {
-    return <div>We've HAVE / HAVE NO openings for Product Managers!</div>;
+    const products = this.props.products;
+
+    const openings = products.reduce((openingsCount, prod) => {
+      if (!prod.managerId) {
+        openingsCount += 1;
+      }
+      return openingsCount;
+    }, 0);
+
+    const pluralProduct = openings === 1 ? 'product' : 'products';
+
+    const availability =
+      openings === products.length
+        ? 'We have no products in need of management.'
+        : ` We have ${openings} ${pluralProduct} in need of management!`;
+
+    return <div>{availability}</div>;
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    products: state.products
+  };
+};
+
+export default connect(mapStateToProps)(Home);
