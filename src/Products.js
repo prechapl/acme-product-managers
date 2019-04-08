@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Products extends Component {
+  findManagerName = (product, managers) => {
+    if (managers.length) {
+      if (product.managerId) {
+        return managers.filter(manager => manager.id === product.managerId)[0]
+          .name;
+      } else {
+        return 'nobody';
+      }
+    }
+  };
+
   render() {
-    // console.log('in Products render', this.props.products);
     const products = this.props.products;
+    const managers = this.props.managers;
+    // console.log('products in Products render', products);
+    // console.log('managers in Products render', managers);
+
     return (
       <div>
         <ul>
           {products.map(product => {
             return (
               <li key={product.id}>
-                {product.name}
-                <div>managerId: {product.managerId}</div>
+                {product.name} is managed by:
+                {this.findManagerName(product, managers)}
               </li>
             );
           })}
@@ -24,7 +38,8 @@ class Products extends Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
+    managers: state.managers
   };
 };
 
