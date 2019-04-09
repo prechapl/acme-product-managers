@@ -16,7 +16,9 @@ app.get('/api/managers', (req, res, next) => {
 });
 
 app.get('/api/products', (req, res, next) => {
-  Product.findAll().then(products => res.send(products));
+  Product.findAll()
+    .then(products => res.send(products))
+    .catch(next);
 });
 
 app.put('/api/products/:id', (req, res, next) => {
@@ -25,6 +27,12 @@ app.put('/api/products/:id', (req, res, next) => {
     .then(product => res.send(product))
     .catch(next);
 });
+
+// app.get('/api/products/:id', (req, res, next) => {
+//   Product.findByPk(req.params.id)
+//     .then(product => res.send(product))
+//     .catch(next);
+// });
 
 const port = process.env.PORT || 3000;
 

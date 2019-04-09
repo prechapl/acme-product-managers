@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DropDownMenu from './DropDownMenu';
+import { fetchProductsThunk, fetchManagersThunk } from './store';
 
 class Products extends Component {
-  findManagerName = (product, managers) => {
-    if (managers.length) {
-      if (product.managerId) {
-        return managers.filter(manager => manager.id === product.managerId)[0]
-          .name;
-      } else {
-        return 'nobody';
-      }
-    }
-  };
+  componentDidMount() {
+    this.props.fetchProductsThunk().catch(ex => console.log(ex));
+    this.props.fetchManagersThunk().catch(ex => console.log(ex));
+  }
+
+  // findManagerName = (product, managers) => {
+  //   if (managers.length) {
+  //     if (product.managerId) {
+  //       return managers.filter(manager => manager.id === product.managerId)[0]
+  //         .name;
+  //     } else {
+  //       return 'nobody';
+  //     }
+  //   }
+  // };
 
   render() {
-    const products = this.props.products;
-    const managers = this.props.managers;
-    // console.log('products in Products render', products);
+    const { products } = this.props;
+
+    console.log('products in Products render', products);
     // console.log('managers in Products render', managers);
 
     return (
@@ -26,7 +33,14 @@ class Products extends Component {
             return (
               <li key={product.id}>
                 {product.name} is managed by:
-                {this.findManagerName(product, managers)}
+                <div>
+                  <DropDownMenu
+                    // managerName={this.findManagerName(product, managers)}
+                    // managers={managers}
+                    product={product}
+                    productId={product.id}
+                  />
+                </div>
               </li>
             );
           })}
@@ -36,11 +50,22 @@ class Products extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-    products: state.products,
+    fetchProductsThunk: () => dispatch(fetchProductsThunk()),
+    fetchManagersThunk: () => dispatch(fetchManagersThunk())
+  };
+};
+
+const mapStateToProps = state => {
+  // console.log('state', state);
+  return {
+    products: state,
     managers: state.managers
   };
 };
 
-export default connect(mapStateToProps)(Products);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Products);

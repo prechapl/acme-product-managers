@@ -2,14 +2,11 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
-const initialState = {
-  products: [],
-  managers: []
-};
-
 //action types
 const GET_PRODUCTS = 'GET_PRODUCTS';
+// const GET_PRODUCT = 'GET_PRODUCT';
 const GET_MANAGERS = 'GET_MANAGERS';
+// const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 //action creators
 const getProducts = products => {
@@ -18,6 +15,12 @@ const getProducts = products => {
     products
   };
 };
+// const getProduct = product => {
+//   return {
+//     type: GET_PRODUCT,
+//     product
+//   };
+// };
 
 const getManagers = managers => {
   return {
@@ -26,8 +29,32 @@ const getManagers = managers => {
   };
 };
 
+// const updateProduct = product => {
+//   return {
+//     type: UPDATE_PRODUCT,
+//     product
+//   };
+// };
+
+//reducer
+const reducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return action.products;
+    case GET_MANAGERS:
+      return { ...state, managers: action.managers };
+    default:
+      return state;
+  }
+};
+
+// case UPDATE_PRODUCT:
+//   return { ...state, products: action.manager };
+
+// n(response => response.data);
+// .then(products => console.log('in thunk products', products))
 //thunks
-export const fetchProductsThunk = () => {
+const fetchProductsThunk = () => {
   return dispatch => {
     return axios
       .get('/api/products')
@@ -43,20 +70,32 @@ export const fetchManagersThunk = () => {
       .then(managers => dispatch(getManagers(managers)));
   };
 };
+// export const updateProductThunk = (product, managerId) => {
+//   const updatedProduct = {
+//     name: product.name,
+//     managerId: managerId
+//   };
+//   return dispatch => {
+//     return axios
+//       .put(`/api/products/${product.id}`, updatedProduct)
+//       .then(() => dispatch(updateProduct(updatedProduct)));
+//   };
+// };
 
-//reducer
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_PRODUCTS:
-      return { ...state, products: action.products };
-    case GET_MANAGERS:
-      return { ...state, managers: action.managers };
-    default:
-      return state;
-  }
-};
+// export const fetchProductThunk = prodId => {
+//   return dispatch => {
+//     return axios
+//       .get(`/api/products/${prodId}`)
+//       .then(response => response.data)
+//       .then(product => dispatch(getProduct(product)));
+//   };
+// };
+
+// export { fetchProductsThunk };
 
 //create store
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
+
+export { fetchProductsThunk };

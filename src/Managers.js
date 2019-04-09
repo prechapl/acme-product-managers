@@ -14,11 +14,10 @@ class Managers extends Component {
     }, []);
 
     const activeManagers = managers.filter(manager =>
-      // manager.id
       uniqueManagerIds.includes(manager.id));
 
     //why is this logging 3 times?
-    console.log('Unique Managers', activeManagers);
+    // console.log('Unique Managers', activeManagers);
 
     return (
       <div>
