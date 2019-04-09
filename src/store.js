@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import axios from 'axios';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import thunk from "redux-thunk";
+import axios from "axios";
 
 //action types
-const GET_PRODUCTS = 'GET_PRODUCTS';
+const GET_PRODUCTS = "GET_PRODUCTS";
 // const GET_PRODUCT = 'GET_PRODUCT';
-const GET_MANAGERS = 'GET_MANAGERS';
-// const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+const GET_MANAGERS = "GET_MANAGERS";
+const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 //action creators
 const getProducts = products => {
@@ -29,35 +29,44 @@ const getManagers = managers => {
   };
 };
 
-// const updateProduct = product => {
-//   return {
-//     type: UPDATE_PRODUCT,
-//     product
-//   };
-// };
+const updateProduct = product => {
+  return {
+    type: UPDATE_PRODUCT,
+    product
+  };
+};
 
 //reducer
-const reducer = (state = [], action) => {
+const productsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products;
-    case GET_MANAGERS:
-      return { ...state, managers: action.managers };
+    case UPDATE_PRODUCT:
+      return action.products;
     default:
       return state;
   }
 };
 
-// case UPDATE_PRODUCT:
-//   return { ...state, products: action.manager };
+const managersReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_MANAGERS:
+      return action.managers;
+    default:
+      return state;
+  }
+};
 
-// n(response => response.data);
-// .then(products => console.log('in thunk products', products))
+const reducer = combineReducers({
+  managers: managersReducer,
+  products: productsReducer
+});
+
 //thunks
 const fetchProductsThunk = () => {
   return dispatch => {
     return axios
-      .get('/api/products')
+      .get("/api/products")
       .then(response => response.data)
       .then(products => dispatch(getProducts(products)));
   };
@@ -65,22 +74,24 @@ const fetchProductsThunk = () => {
 export const fetchManagersThunk = () => {
   return dispatch => {
     return axios
-      .get('/api/managers')
+      .get("/api/managers")
       .then(response => response.data)
       .then(managers => dispatch(getManagers(managers)));
   };
 };
-// export const updateProductThunk = (product, managerId) => {
-//   const updatedProduct = {
-//     name: product.name,
-//     managerId: managerId
-//   };
-//   return dispatch => {
-//     return axios
-//       .put(`/api/products/${product.id}`, updatedProduct)
-//       .then(() => dispatch(updateProduct(updatedProduct)));
-//   };
-// };
+
+export const updateProductThunk = (product, managerId) => {
+  const updatedProduct = {
+    id: product.id,
+    name: product.name,
+    managerId: managerId
+  };
+  return dispatch => {
+    return axios
+      .put(`/api/products/${updatedProduct.id}`, updatedProduct)
+      .then(() => dispatch(updateProduct(updatedProduct)));
+  };
+};
 
 // export const fetchProductThunk = prodId => {
 //   return dispatch => {
@@ -90,8 +101,6 @@ export const fetchManagersThunk = () => {
 //       .then(product => dispatch(getProduct(product)));
 //   };
 // };
-
-// export { fetchProductsThunk };
 
 //create store
 const store = createStore(reducer, applyMiddleware(thunk));

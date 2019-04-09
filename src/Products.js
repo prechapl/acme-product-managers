@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import DropDownMenu from './DropDownMenu';
-import { fetchProductsThunk, fetchManagersThunk } from './store';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import DropDownMenu from "./DropDownMenu";
+import { fetchProductsThunk, fetchManagersThunk } from "./store";
 
 class Products extends Component {
   componentDidMount() {
@@ -9,22 +9,22 @@ class Products extends Component {
     this.props.fetchManagersThunk().catch(ex => console.log(ex));
   }
 
-  // findManagerName = (product, managers) => {
-  //   if (managers.length) {
-  //     if (product.managerId) {
-  //       return managers.filter(manager => manager.id === product.managerId)[0]
-  //         .name;
-  //     } else {
-  //       return 'nobody';
-  //     }
-  //   }
-  // };
+  findManagerName = (product, managers) => {
+    if (managers.length) {
+      if (product.managerId) {
+        return managers.filter(manager => manager.id === product.managerId)[0]
+          .name;
+      } else {
+        return "nobody";
+      }
+    }
+  };
 
   render() {
-    const { products } = this.props;
+    const { products, managers } = this.props;
 
-    console.log('products in Products render', products);
-    // console.log('managers in Products render', managers);
+    console.log("products in Products render", products);
+    console.log("managers in Products render", managers);
 
     return (
       <div>
@@ -35,8 +35,8 @@ class Products extends Component {
                 {product.name} is managed by:
                 <div>
                   <DropDownMenu
-                    // managerName={this.findManagerName(product, managers)}
-                    // managers={managers}
+                    managerName={this.findManagerName(product, managers)}
+                    managers={managers}
                     product={product}
                     productId={product.id}
                   />
@@ -60,7 +60,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   // console.log('state', state);
   return {
-    products: state,
+    products: state.products,
     managers: state.managers
   };
 };

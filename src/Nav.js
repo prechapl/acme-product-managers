@@ -1,10 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Nav = ({ location }) => {
-  // console.log('location ', location);
+const Nav = ({ location, managers }) => {
   const pathname = location.pathname;
-  const links = ['/api/home', '/api/products', '/api/managers'];
+  const links = ["/api/home", "/api/products", "/api/managers"];
 
   return (
     <nav className="nav">
@@ -15,8 +14,15 @@ const Nav = ({ location }) => {
           <li className="nav-item" key={link}>
             <Link
               to={link}
-              className={`nav-link${link === pathname ? ' active' : ''}`}
+              className={`nav-link${link === pathname ? " active" : ""}`}
             >
+              {link === "/api/managers" ? (
+                <span className="badge badge-pill badge-light">
+                  {managers.length}
+                </span>
+              ) : (
+                ""
+              )}
               {link.slice(5)}
             </Link>
           </li>

@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import // updateProductThunk
-// fetchProductsThunk,
-// fetchProductThunk
-'./store';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  updateProductThunk,
+  fetchProductsThunk,
+  fetchProductThunk
+} from "./store";
 
 class DropDownMenu extends Component {
   constructor() {
@@ -16,14 +17,14 @@ class DropDownMenu extends Component {
   revealMenu = event => {
     event.preventDefault();
     this.setState({ revealMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
+      document.addEventListener("click", this.closeMenu);
     });
   };
 
   closeMenu = event => {
     if (!this.dropdownMenu.contains(event.target)) {
       this.setState({ revealMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
+        document.removeEventListener("click", this.closeMenu);
       });
     }
   };

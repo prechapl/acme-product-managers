@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class Managers extends Component {
   render() {
@@ -14,10 +14,8 @@ class Managers extends Component {
     }, []);
 
     const activeManagers = managers.filter(manager =>
-      uniqueManagerIds.includes(manager.id));
-
-    //why is this logging 3 times?
-    // console.log('Unique Managers', activeManagers);
+      uniqueManagerIds.includes(manager.id)
+    );
 
     return (
       <div>
