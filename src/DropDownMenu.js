@@ -1,10 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import {
-  updateProductThunk,
-  fetchProductsThunk,
-  fetchProductThunk
-} from "./store";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateProductThunk } from './store';
 
 class DropDownMenu extends Component {
   constructor() {
@@ -17,26 +13,24 @@ class DropDownMenu extends Component {
   revealMenu = event => {
     event.preventDefault();
     this.setState({ revealMenu: true }, () => {
-      document.addEventListener("click", this.closeMenu);
+      document.addEventListener('click', this.closeMenu);
     });
   };
 
   closeMenu = event => {
     if (!this.dropdownMenu.contains(event.target)) {
       this.setState({ revealMenu: false }, () => {
-        document.removeEventListener("click", this.closeMenu);
+        document.removeEventListener('click', this.closeMenu);
       });
     }
   };
 
-  renderOptions = () => {
+  buttonOptions = () => {
     const product = this.props.product;
-    // const managerIdx = this.props.managerId;
     return this.props.managers.map(manager => (
       <button
         type="submit"
         key={manager.id}
-        // onClick={() => console.log(product, manager.id)}
         onClick={() => this.props.update(product, manager.id)}
       >
         {manager.name}
@@ -45,15 +39,11 @@ class DropDownMenu extends Component {
   };
 
   render() {
-    // console.log('this.state.product', this.state.product);
-
-    // const produ = this.props.fetchProd(productId);
     return (
       <div>
         <button type="submit" onClick={this.revealMenu}>
           {this.props.managerName}
         </button>
-
         {this.state.revealMenu ? (
           <div
             className="menu"
@@ -61,30 +51,27 @@ class DropDownMenu extends Component {
               this.dropdownMenu = element;
             }}
           >
-            {this.renderOptions()}
+            {this.buttonOptions()}
           </div>
         ) : null}
       </div>
     );
   }
 }
-// const mapStateToProps = state => {
-//   return {
-//     product: state.products
-//   };
-// };
 
 const mapDispatchToProps = dispatch => {
   return {
-    // // fetchProds: () => dispatch(fetchProductsThunk()),
-    // fetchProd: id => dispatch(fetchProductThunk(id)),
     update: (prod, manId) => dispatch(updateProductThunk(prod, manId))
   };
 };
+
+// const mapStateToProps = state => {
+//   return {
+//     activeManagers: state.activeManagers
+//   };
+// };
 
 export default connect(
   null,
   mapDispatchToProps
 )(DropDownMenu);
-
-// export default DropDownMenu;

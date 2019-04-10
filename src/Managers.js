@@ -1,6 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { activeManagersThunk } from "./store";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { activeManagersThunk } from './store';
+
+const mapStateToProps = state => {
+  return {
+    activeManagers: state.activeManagers
+  };
+};
 
 class Managers extends Component {
   componentDidMount() {
@@ -28,12 +34,6 @@ class Managers extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     activeManagersThunk: () => dispatch(activeManagersThunk())
-  };
-};
-
-const mapStateToProps = state => {
-  return {
-    activeManagers: state.activeManagers
   };
 };
 

@@ -22,24 +22,28 @@ class Products extends Component {
 
   render() {
     const { products, managers } = this.props;
+    console.log('props in Product', this.props);
+
     return (
       <div>
         <ul>
-          {products.map(product => {
-            return (
-              <li key={product.id}>
-                {product.name} is managed by:
-                <div>
-                  <DropDownMenu
-                    managerName={this.findManagerName(product, managers)}
-                    managers={managers}
-                    product={product}
-                    productId={product.id}
-                  />
-                </div>
-              </li>
-            );
-          })}
+          {products.length
+            ? products.map(product => {
+                return (
+                  <li key={product.id}>
+                    {product.name} is managed by:
+                    <div>
+                      <DropDownMenu
+                        managerName={this.findManagerName(product, managers)}
+                        managers={managers}
+                        product={product}
+                        productId={product.id}
+                      />
+                    </div>
+                  </li>
+                );
+              })
+            : null}
         </ul>
       </div>
     );

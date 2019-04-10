@@ -2,12 +2,15 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
+// const initialState = {
+//   products: [],
+//   managers: []
+// };
+
 //action types
 const GET_PRODUCTS = 'GET_PRODUCTS';
-// const GET_PRODUCT = 'GET_PRODUCT';
 const GET_MANAGERS = 'GET_MANAGERS';
 const GET_ACTIVE_MANAGERS = 'GET_ACTIVE_MANAGERS';
-const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 //action creators
 const getProducts = products => {
@@ -16,12 +19,6 @@ const getProducts = products => {
     products
   };
 };
-// const getProduct = product => {
-//   return {
-//     type: GET_PRODUCT,
-//     product
-//   };
-// };
 
 const getManagers = managers => {
   return {
@@ -36,19 +33,10 @@ const getActiveManagers = activeManagers => {
   };
 };
 
-const updateProduct = product => {
-  return {
-    type: UPDATE_PRODUCT,
-    product
-  };
-};
-
 //reducer
 const productsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
-      return action.products;
-    case UPDATE_PRODUCT:
       return action.products;
     default:
       return state;
@@ -106,7 +94,7 @@ export const updateProductThunk = (product, managerId) => {
   return dispatch => {
     return axios
       .put(`/api/products/${updatedProduct.id}`, updatedProduct)
-      .then(() => dispatch(updateProduct(updatedProduct)));
+      .then(() => dispatch(fetchProductsThunk()));
   };
 };
 
@@ -128,8 +116,27 @@ export const activeManagersThunk = () => {
       .then(actingManagers => dispatch(getActiveManagers(actingManagers)));
   };
 };
+// const activeManagers = state => {
+//   const products = state.products;
+//   const managers = state.managers;
+//   console.log('products in activeManagers', products);
+//   if (state.products !== undefined) {
+//     const uniqueManagerIds = state.products.reduce((manIds, product) => {
+//       if (product.managerId && !manIds.includes(product.managerId)) {
+//         manIds.push(product.managerId);
+//       }
+//       return manIds;
+//     }, []);
+
+//     const active = state.managers.filter(manager =>
+//       uniqueManagerIds.includes(manager.id));
+//     return active;
+//   }
+// };
 
 //create store
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
+
+// export { activeManagers };
