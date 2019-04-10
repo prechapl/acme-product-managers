@@ -1,26 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { activeManagersThunk } from "./store";
 
 class Managers extends Component {
+  componentDidMount() {
+    this.props.activeManagersThunk().catch(ex => console.log(ex));
+  }
   render() {
-    const managers = this.props.managers;
-    const products = this.props.products;
-
-    const uniqueManagerIds = products.reduce((manIds, product) => {
-      if (product.managerId && !manIds.includes(product.managerId)) {
-        manIds.push(product.managerId);
-      }
-      return manIds;
-    }, []);
-
-    const activeManagers = managers.filter(manager =>
-      uniqueManagerIds.includes(manager.id)
-    );
-
+    const workingManagers = this.props.activeManagers;
+    // console.log('workingManagers', workingManagers);
     return (
       <div>
         <ul>
-          {activeManagers.map(manager => {
+          {workingManagers.map(manager => {
             return (
               <li key={manager.id}>
                 {manager.name}'s ID is {manager.id}
@@ -32,11 +24,20 @@ class Managers extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+
+const mapDispatchToProps = dispatch => {
   return {
-    products: state.products,
-    managers: state.managers
+    activeManagersThunk: () => dispatch(activeManagersThunk())
   };
 };
 
-export default connect(mapStateToProps)(Managers);
+const mapStateToProps = state => {
+  return {
+    activeManagers: state.activeManagers
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Managers);
