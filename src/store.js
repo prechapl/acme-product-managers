@@ -29,13 +29,6 @@ const getActiveManagers = activeManagers => {
 };
 
 //reducers
-
-// const initialState = {
-//   products: [],
-//   managers: [],
-//   activeManagers: []
-// };
-
 const productsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
@@ -124,5 +117,3 @@ export const activeManagersThunk = () => {
 const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
-
-// export { activeManagers };

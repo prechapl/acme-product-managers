@@ -17,7 +17,8 @@ class App extends Component {
       <Fragment>
         <HashRouter>
           <Route render={({ location }) => <Nav location={location} />} />
-          <Route path="/api/products" render={() => <Products />} />
+          {/* <Route path="/api/products" render={() => <Products />} /> */}
+          <Route path="/api/products" component={Products} />
           <Route path="/api/managers" component={Managers} />
           <Route path="/api/home" component={Home} />
         </HashRouter>

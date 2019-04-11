@@ -15,15 +15,14 @@ class Products extends Component {
         return managers.filter(manager => manager.id === product.managerId)[0]
           .name;
       } else {
-        return 'nobody';
+        return 'none';
       }
     }
   };
 
   render() {
     const { products, managers } = this.props;
-    console.log('props in Product', this.props);
-
+    // console.log('props in Product', this.props);
     return (
       <div>
         <ul>

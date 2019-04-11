@@ -33,7 +33,7 @@ class DropDownMenu extends Component {
         key={manager.id}
         onClick={() => this.props.update(product, manager.id)}
       >
-        {product.managerId !== manager.id ? manager.name : '--none--'}
+        {product.managerId !== manager.id ? manager.name : 'none'}
       </button>
     ));
   };
