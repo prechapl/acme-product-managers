@@ -15,7 +15,7 @@ class Home extends Component {
     const pluralProduct = openings === 1 ? 'product' : 'products';
 
     const availability =
-      openings === products.length
+      openings === 0
         ? 'We have no products in need of management.'
         : ` We have ${openings} ${pluralProduct} in need of management!`;
 

@@ -1,12 +1,12 @@
 {
-  "name": "react-basic-template",
+  "name": "",
   "version": "1.0.0",
   "description": "",
-  "main": "db.js",
   "dependencies": {
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "express": "^4.16.4",
@@ -27,13 +27,16 @@
       "stage-2"
     ]
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "nodemon": "^1.18.11"
+  },
   "scripts": {
     "start": "node server.js",
     "postinstall": "npm run webpack",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack -- --mode=development --watch",
-    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/acme-product-managers nodemon server.js --ignore src/ --ignore dist/"
+    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/acme-product-managers ./node_modules/.bin/nodemon server/index.js --ignore client/ --ignore dist/"
   },
   "keywords": [],
   "author": "",

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { activeManagersThunk } from './store';
-// import { activeManagers } from './store';
 
 class Nav extends Component {
   componentDidMount() {
@@ -20,8 +19,8 @@ class Nav extends Component {
     const pathname = location.pathname;
     const links = ['/api/home', '/api/products', '/api/managers'];
     const activeMans = this.props.activeManagers;
-    console.log('managers in Nav', activeMans);
-    console.log('props in Nav', this.props);
+    // console.log('managers in Nav', activeMans);
+    // console.log('props in Nav', this.props);
 
     return (
       <nav className="nav">

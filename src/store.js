@@ -2,11 +2,6 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
-// const initialState = {
-//   products: [],
-//   managers: []
-// };
-
 //action types
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const GET_MANAGERS = 'GET_MANAGERS';
@@ -33,7 +28,14 @@ const getActiveManagers = activeManagers => {
   };
 };
 
-//reducer
+//reducers
+
+// const initialState = {
+//   products: [],
+//   managers: [],
+//   activeManagers: []
+// };
+
 const productsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
@@ -85,11 +87,12 @@ export const fetchManagersThunk = () => {
   };
 };
 
-export const updateProductThunk = (product, managerId) => {
+export const updateProductThunk = (product, manageId) => {
+  manageId = product.managerId !== manageId ? manageId : null;
   const updatedProduct = {
     id: product.id,
     name: product.name,
-    managerId: managerId
+    managerId: manageId
   };
   return dispatch => {
     return axios
@@ -116,23 +119,6 @@ export const activeManagersThunk = () => {
       .then(actingManagers => dispatch(getActiveManagers(actingManagers)));
   };
 };
-// const activeManagers = state => {
-//   const products = state.products;
-//   const managers = state.managers;
-//   console.log('products in activeManagers', products);
-//   if (state.products !== undefined) {
-//     const uniqueManagerIds = state.products.reduce((manIds, product) => {
-//       if (product.managerId && !manIds.includes(product.managerId)) {
-//         manIds.push(product.managerId);
-//       }
-//       return manIds;
-//     }, []);
-
-//     const active = state.managers.filter(manager =>
-//       uniqueManagerIds.includes(manager.id));
-//     return active;
-//   }
-// };
 
 //create store
 const store = createStore(reducer, applyMiddleware(thunk));

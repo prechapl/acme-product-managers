@@ -33,7 +33,7 @@ class DropDownMenu extends Component {
         key={manager.id}
         onClick={() => this.props.update(product, manager.id)}
       >
-        {manager.name}
+        {product.managerId !== manager.id ? manager.name : '--none--'}
       </button>
     ));
   };
@@ -64,12 +64,6 @@ const mapDispatchToProps = dispatch => {
     update: (prod, manId) => dispatch(updateProductThunk(prod, manId))
   };
 };
-
-// const mapStateToProps = state => {
-//   return {
-//     activeManagers: state.activeManagers
-//   };
-// };
 
 export default connect(
   null,
