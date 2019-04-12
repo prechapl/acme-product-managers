@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { activeManagersThunk } from './store';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { activeManagersThunk } from "./store";
 
 class Nav extends Component {
   componentDidMount() {
@@ -13,7 +13,7 @@ class Nav extends Component {
 
   render() {
     const pathname = location.pathname;
-    const links = ['/api/home', '/api/products', '/api/managers'];
+    const links = ["/api/home", "/api/products", "/api/managers"];
     const activeMans = this.props.activeManagers;
 
     return (
@@ -24,14 +24,14 @@ class Nav extends Component {
             <li className="nav-item" key={link}>
               <Link
                 to={link}
-                className={`nav-link${link === pathname ? ' active' : ''}`}
+                className={`nav-link${link === pathname ? " active" : ""}`}
               >
-                {link === '/api/managers' ? (
+                {link === "/api/managers" ? (
                   <span className="badge badge-pill badge-light">
                     {activeMans.length}
                   </span>
                 ) : (
-                  ''
+                  ""
                 )}
                 {link.slice(5)}
               </Link>

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import DropDownMenu from './DropDownMenu';
-import { fetchProductsThunk, fetchManagersThunk } from './store';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import DropDownMenu from "./DropDownMenu";
+import { fetchProductsThunk, fetchManagersThunk } from "./store";
 
 class Products extends Component {
   componentDidMount() {
@@ -15,34 +15,46 @@ class Products extends Component {
         return managers.filter(manager => manager.id === product.managerId)[0]
           .name;
       } else {
-        return 'none';
+        return "none";
       }
     }
   };
 
   render() {
     const { products, managers } = this.props;
-    // console.log('props in Product', this.props);
+    products.sort(function(a, b) {
+      return a - b;
+    });
+    managers.sort(function(a, b) {
+      return a - b;
+    });
+    // console.log("props in Product", this.props);
+    // console.log("products in Product", products);
+
+    const listStyle = {
+      listStyleType: "none",
+      margin: "0",
+      padding: "25px"
+    };
+
     return (
       <div>
-        <ul>
-          {products.length
-            ? products.map(product => {
-                return (
-                  <li key={product.id}>
-                    {product.name} is managed by:
-                    <div>
-                      <DropDownMenu
-                        managerName={this.findManagerName(product, managers)}
-                        managers={managers}
-                        product={product}
-                        productId={product.id}
-                      />
-                    </div>
-                  </li>
-                );
-              })
-            : null}
+        <ul style={listStyle}>
+          {products.map(product => {
+            return (
+              <li key={product.id}>
+                {product.name} is managed by:
+                <div>
+                  <DropDownMenu
+                    managerName={this.findManagerName(product, managers)}
+                    managers={managers}
+                    product={product}
+                    productId={product.id}
+                  />
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
@@ -58,8 +70,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
-    managers: state.managers
+    products: state.products || [],
+    managers: state.managers || []
   };
 };
 

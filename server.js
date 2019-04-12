@@ -30,12 +30,6 @@ app.put("/api/products/:id", (req, res, next) => {
     .catch(next);
 });
 
-app.get("/api/products/:id", (req, res, next) => {
-  Product.findByPk(req.params.id)
-    .then(product => res.send(product))
-    .catch(next);
-});
-
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`listening on port ${port}`));
